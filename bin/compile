@@ -45,6 +45,9 @@ then arch=amd64
 fi
 plat=$(uname|tr A-Z a-z)-$arch
 
+npm install -g node-sass@3.3.2
+npm install -g coffee-script@1.6.2
+
 # Python
 venv=$cache/venv
 mkdir -p $cache/pip
@@ -164,7 +167,10 @@ then
     fi
 else
     echo "-----> Running: go get ${FLAGS[@]} ./..."
+    go get github.com/huacnlee/train
+    go build -o $GOPATH/bin/train github.com/huacnlee/train/cmd
     go get "${FLAGS[@]}" ./...
+    train --source app/assets --out public
 fi
 
 
